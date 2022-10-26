@@ -62,3 +62,9 @@ app.post("/todo", checkExistsUserAccount, (request, response) => {
 
     return response.status(201).send();
 });
+
+app.get("/todos", checkExistsUserAccount, (request, response) => {
+    const { user } = request;
+
+    return response.json(user.todoList);
+});
