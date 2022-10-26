@@ -36,3 +36,12 @@ app.post("/users", (request, response) => {
 
     return response.status(201).send();
 });
+
+app.get("/users", (request, response) => {
+    return response.json(users);
+});
+
+app.get("/user", checkExistsUserAccount, (request, response) => {
+    const { user } = request;
+    return response.json(user);
+});
