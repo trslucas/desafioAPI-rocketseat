@@ -45,3 +45,20 @@ app.get("/user", checkExistsUserAccount, (request, response) => {
     const { user } = request;
     return response.json(user);
 });
+
+app.post("/todo", checkExistsUserAccount, (request, response) => {
+    const { user } = request;
+    const { title, deadline } = request.body;
+
+    const newTask = {
+        id: uuidv4(),
+        title,
+        isDone: false,
+        deadline: new Date(deadline),
+        created_at: new Date(),
+    };
+
+    user.todoList.push(newTask);
+
+    return response.status(201).send();
+});
