@@ -92,3 +92,14 @@ app.patch("/todos/:id/done", checkExistsUserAccount, (request, response) => {
 
     return response.status(201).send();
 });
+
+app.delete("/todos/:id", checkExistsUserAccount, (request, response) => {
+    const { user } = request;
+    const { id } = request.params;
+
+    const deletedTodo = user.todoList.filter((todo) => todo.id === id);
+
+    user.todoList.splice(deletedTodo, 1);
+
+    return response.status(200).json(user.todoList);
+});
