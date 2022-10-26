@@ -68,3 +68,27 @@ app.get("/todos", checkExistsUserAccount, (request, response) => {
 
     return response.json(user.todoList);
 });
+
+app.put("/todos/:id", checkExistsUserAccount, (request, response) => {
+    const { user } = request;
+    const { id } = request.params;
+    const { title, deadline } = request.body;
+
+    const todo = user.todoList.find((todo) => todo.id === id);
+
+    todo.title = title;
+    todo.deadline = new Date(deadline);
+
+    return response.status(201).send();
+});
+
+app.patch("/todos/:id/done", checkExistsUserAccount, (request, response) => {
+    const { user } = request;
+    const { id } = request.params;
+
+    const todo = user.todoList.find((todo) => todo.id === id);
+
+    todo.isDone = true;
+
+    return response.status(201).send();
+});
